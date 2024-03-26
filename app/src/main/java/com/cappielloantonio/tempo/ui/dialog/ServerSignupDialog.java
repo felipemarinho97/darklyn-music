@@ -36,7 +36,7 @@ public class ServerSignupDialog extends DialogFragment {
     private String serverName = "darklyn";
     private String username;
     private String password;
-    private String server = "https://navidrome.darklyn.online";
+    private String server = "https://navidrome.darklyn.org";
     private boolean lowSecurity = false;
 
     @NonNull

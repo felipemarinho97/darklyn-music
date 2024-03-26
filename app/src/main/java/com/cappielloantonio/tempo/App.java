@@ -30,7 +30,7 @@ public class App extends Application {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         Preferences.setServerId("darklyn");
-        Preferences.setServer("https://navidrome.darklyn.online");
+        Preferences.setServer("https://navidrome.darklyn.org");
         Preferences.setLowSecurity(false);
     }
 
