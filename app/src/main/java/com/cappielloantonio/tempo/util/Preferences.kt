@@ -1,6 +1,7 @@
 package com.cappielloantonio.tempo.util
 
 import com.cappielloantonio.tempo.App
+import com.cappielloantonio.tempo.model.HomeSector
 import com.cappielloantonio.tempo.subsonic.models.OpenSubsonicExtension
 import com.google.gson.Gson
 
@@ -52,9 +53,10 @@ object Preferences {
     private const val BUFFERING_STRATEGY = "buffering_strategy"
     private const val SKIP_MIN_STAR_RATING = "skip_min_star_rating"
     private const val MIN_STAR_RATING = "min_star_rating"
-    private const val ARTIST_ALBUM_LAYOUT = "artist_album_layout"
     private const val ALWAYS_ON_DISPLAY = "always_on_display"
     private const val AUDIO_QUALITY_PER_ITEM = "audio_quality_per_item"
+    private const val HOME_SECTOR_LIST = "home_sector_list"
+    private const val RATING_PER_ITEM = "rating_per_item"
 
 
     @JvmStatic
@@ -377,17 +379,6 @@ object Preferences {
     }
 
     @JvmStatic
-    fun isArtistAlbumLayoutHorizontal(): Boolean {
-        return App.getInstance().preferences.getBoolean(ARTIST_ALBUM_LAYOUT, true)
-    }
-
-    @JvmStatic
-    fun setArtistAlbumLayout(isArtistAlbumLayoutHorizontal: Boolean) {
-        App.getInstance().preferences.edit().putBoolean(ARTIST_ALBUM_LAYOUT, isArtistAlbumLayoutHorizontal)
-            .apply()
-    }
-
-    @JvmStatic
     fun isDisplayAlwaysOn(): Boolean {
         return App.getInstance().preferences.getBoolean(ALWAYS_ON_DISPLAY, false)
     }
@@ -395,5 +386,20 @@ object Preferences {
     @JvmStatic
     fun showAudioQuality(): Boolean {
         return App.getInstance().preferences.getBoolean(AUDIO_QUALITY_PER_ITEM, false)
+    }
+
+    @JvmStatic
+    fun getHomeSectorList(): String? {
+        return App.getInstance().preferences.getString(HOME_SECTOR_LIST, null)
+    }
+
+    @JvmStatic
+    fun setHomeSectorList(extension: List<HomeSector>?) {
+        App.getInstance().preferences.edit().putString(HOME_SECTOR_LIST, Gson().toJson(extension)).apply()
+    }
+
+    @JvmStatic
+    fun showItemRating(): Boolean {
+        return App.getInstance().preferences.getBoolean(RATING_PER_ITEM, false)
     }
 }
