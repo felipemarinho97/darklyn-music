@@ -61,7 +61,7 @@ object Preferences {
 
     @JvmStatic
     fun getServer(): String {
-        return "https://navidrome.darklyn.online"
+        return "https://navidrome.darklyn.org"
     }
 
     @JvmStatic
