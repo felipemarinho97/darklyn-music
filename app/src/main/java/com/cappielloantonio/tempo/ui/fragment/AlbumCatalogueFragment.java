@@ -67,6 +67,7 @@ public class AlbumCatalogueFragment extends Fragment implements ClickCallback {
 
         initAppBar();
         initAlbumCatalogueView();
+        initProgressLoader();
 
         return view;
     }
@@ -111,7 +112,7 @@ public class AlbumCatalogueFragment extends Fragment implements ClickCallback {
         bind.albumCatalogueRecyclerView.addItemDecoration(new GridItemDecoration(2, 20, false));
         bind.albumCatalogueRecyclerView.setHasFixedSize(true);
 
-        albumAdapter = new AlbumCatalogueAdapter(this);
+        albumAdapter = new AlbumCatalogueAdapter(this, true);
         albumAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         bind.albumCatalogueRecyclerView.setAdapter(albumAdapter);
         albumCatalogueViewModel.getAlbumList().observe(getViewLifecycleOwner(), albums -> albumAdapter.setItems(albums));
@@ -122,6 +123,18 @@ public class AlbumCatalogueFragment extends Fragment implements ClickCallback {
         });
 
         bind.albumListSortImageView.setOnClickListener(view -> showPopupMenu(view, R.menu.sort_album_popup_menu));
+    }
+
+    private void initProgressLoader() {
+        albumCatalogueViewModel.getLoadingStatus().observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading) {
+                bind.albumListSortImageView.setEnabled(false);
+                bind.albumListProgressLoader.setVisibility(View.VISIBLE);
+            } else {
+                bind.albumListSortImageView.setEnabled(true);
+                bind.albumListProgressLoader.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -170,6 +183,9 @@ public class AlbumCatalogueFragment extends Fragment implements ClickCallback {
                 return true;
             } else if (menuItem.getItemId() == R.id.menu_album_sort_random) {
                 albumAdapter.sort(Constants.ALBUM_ORDER_BY_RANDOM);
+                return true;
+            } else if (menuItem.getItemId() == R.id.menu_album_sort_recently_added) {
+                albumAdapter.sort(Constants.ALBUM_ORDER_BY_RECENTLY_ADDED);
                 return true;
             }
 
